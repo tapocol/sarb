@@ -4,3 +4,12 @@
 # Version Manager files
 .rvmrc
 
+# RSpec
+.rspec
+
+# Bundler
+Gemfile.lock
+
+# Gem
+sarb-*.gem
+
