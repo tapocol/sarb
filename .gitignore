@@ -1,0 +1,6 @@
+# Text-editor extra files
+*.swp
+
+# Version Manager files
+.rvmrc
+

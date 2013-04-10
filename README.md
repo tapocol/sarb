@@ -1,0 +1,26 @@
+# Socket Action Ruby (sarb)
+
+Framework for em-websocket that uses actions and triggers for real-time communication with your app.
+
+## Example
+
+```ruby
+require "sarb"
+
+app = Sarb::Application.new
+app.action(:foo) { |session, args| session.message(:action => :bar) }
+app.run
+```
+
+On client side:
+
+```javascript
+var ws = new WebSocket("ws://127.0.0.1:8080/");
+ws.onmessage = function(message) { console.log(message) };
+ws.send(JSON.stringify({ action: "foo" }))
+```
+
+## License
+
+The MIT License - Copyright (c) 2012-2013 Craig Jackson
+
