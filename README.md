@@ -2,6 +2,20 @@
 
 Framework for em-websocket that uses actions and triggers for real-time communication with your app.
 
+## Install
+
+For latest rubygems version:
+
+```ruby
+gem "sarb"
+```
+
+For latest github commit:
+
+```ruby
+gem "sarb", :git => "https://github.com/craigjackson/sarb.git"
+```
+
 ## Example
 
 ```ruby
