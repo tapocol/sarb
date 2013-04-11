@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "sarb"
-  s.version     = "0.1.0"
+  s.version     = "0.1.1"
   s.summary     = "Socket Action Ruby"
   s.description = "Framework for em-websocket that uses actions and triggers for real-time communication with your app."
   s.authors     = ["Craig Jackson"]
