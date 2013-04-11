@@ -11,7 +11,7 @@ module Sarb
         :connection_open => [method(:connection_open)],
         :connection_close => [method(:connection_close)]
       }
-      @connections = []
+      @connections = Set.new
     end
 
     def action(name, &block)
@@ -33,6 +33,10 @@ module Sarb
 
     def connection_close(args)
       @connections.delete(args[:connection])
+    end
+
+    def message_all(message, exceptions=Set.new)
+      @connections.each { |c| c.message(message) unless exceptions.include?(c) }
     end
 
     def run(options = {})
