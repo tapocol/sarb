@@ -34,6 +34,10 @@ ws.onmessage = function(message) { console.log(message) };
 ws.send(JSON.stringify({ action: "foo" }))
 ```
 
+### Linked Examples
+
+- [Chat App](https://github.com/craigjackson/sarb-chat)
+
 ## License
 
 The MIT License - Copyright (c) 2012-2013 Craig Jackson
