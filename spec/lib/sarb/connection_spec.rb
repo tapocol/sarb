@@ -51,11 +51,26 @@ describe Sarb::Connection do
   context "setup" do
     it "should create new Connection and add 'on' events" do
       Sarb::Connection.should_receive(:new).with(@app, @ws).and_return(@connection)
-      # TODO: Putting the intended blocks in the 'with' method on the following stubs causes an error.
-      @ws.should_receive(:onopen)
-      @ws.should_receive(:onmessage)
-      @ws.should_receive(:onclose)
-      Sarb::Connection.setup(@app, @ws)
+
+      onopen_expected = false
+      onopen_method = Proc.new{ :onopen }
+      @connection.should_receive(:method).with(:onopen).and_return(onopen_method)
+      @ws.should_receive(:onopen) { |&block| onopen_expected = (block == onopen_method) }
+
+      onmessage_expected = false
+      onmessage_method = Proc.new{ :onmessage }
+      @connection.should_receive(:method).with(:onmessage).and_return(onmessage_method)
+      @ws.should_receive(:onmessage) { |&block| onmessage_expected = (block == onmessage_method) }
+
+      onclose_expected = false
+      onclose_method = Proc.new{ :onclose }
+      @connection.should_receive(:method).with(:onclose).and_return(onclose_method)
+      @ws.should_receive(:onclose) { |&block| onclose_expected = (block == onclose_method) }
+
+      Sarb::Connection.setup(@app, @ws).should be_equal(@connection)
+      onopen_expected.should be_true
+      onmessage_expected.should be_true
+      onclose_expected.should be_true
     end
   end
 end

@@ -26,6 +26,7 @@ module Sarb
       ws.onopen &connection.method(:onopen)
       ws.onmessage &connection.method(:onmessage)
       ws.onclose &connection.method(:onclose)
+      connection
     end
   end
 end

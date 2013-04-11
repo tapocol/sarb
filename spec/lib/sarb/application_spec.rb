@@ -90,26 +90,29 @@ describe Sarb::Application do
   context "run" do
     it "should start an EventMachine::WebSocket with defaults" do
       method = Proc.new {}
-      @app.stub(:method => method)
-      # TODO: Not really sure how to test &method is passed. "with" does not actually test &method.
-      EventMachine::WebSocket.should_receive(:start).with(Sarb::Application::DEFAULTS, &method)
+      method_expected = false
+      @app.stub(:method).with(:new_connection).and_return(method)
+      EventMachine::WebSocket.should_receive(:start){|&block| method_expected = (block == method)}.with(Sarb::Application::DEFAULTS)
       @app.run
+      method_expected.should be_true
     end
 
     it "should start an EventMachine::WebSocket with given host and default port" do
       method = Proc.new {}
-      @app.stub(:method => method)
-      # TODO: Not really sure how to test &method is passed. "with" does not actually test &method.
-      EventMachine::WebSocket.should_receive(:start).with(:host => "testhost", :port => Sarb::Application::DEFAULTS[:port], &method)
+      method_expected = false
+      @app.stub(:method).with(:new_connection).and_return(method)
+      EventMachine::WebSocket.should_receive(:start){|&block| method_expected = (block == method)}.with(:host => "testhost", :port => Sarb::Application::DEFAULTS[:port])
       @app.run :host => "testhost"
+      method_expected.should be_true
     end
 
     it "should start an EventMachine::WebSocket with default host and given port" do
       method = Proc.new {}
-      @app.stub(:method => method)
-      # TODO: Not really sure how to test &method is passed. "with" does not actually test &method.
-      EventMachine::WebSocket.should_receive(:start).with(:host => Sarb::Application::DEFAULTS[:host], :port => "testport", &method)
+      method_expected = false
+      @app.stub(:method).with(:new_connection).and_return(method)
+      EventMachine::WebSocket.should_receive(:start){|&block| method_expected = (block == method)}.with(:host => Sarb::Application::DEFAULTS[:host], :port => "testport")
       @app.run :port => "testport"
+      method_expected.should be_true
     end
   end
 
